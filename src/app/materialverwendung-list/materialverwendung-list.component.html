@@ -1,0 +1,22 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Material</th>
+        <th scope="col">Verarbeitung</th>
+        <th scope="col">Recycling-Methode</th>
+        <th scope="col">CO<sub>2</sub>-Menge</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let materialverwendung of materialverwendungs">
+        <td>{{ materialverwendung.material }}</td>
+        <td>{{ materialverwendung.verarbeitung }}</td>
+        <td>{{ materialverwendung.recyclingmethode }}</td>
+        <td>{{ materialverwendung.co2menge }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

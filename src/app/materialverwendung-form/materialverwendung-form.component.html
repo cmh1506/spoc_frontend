@@ -1,0 +1,11 @@
+<form #form="ngForm" autocomplete="off" ><!--(ngSubmit)="onSubmit(form)"-->
+  <div class="form-group">
+    <label>Material</label>
+    <select name="materialId" #footItemSelect #materialId="ngModel" [(ngModel)]="formData.materialId" class="form-control"
+            [class.is-invalid]="footItemSelect.selectedIndex==0">
+      <option value='0' >-Select-</option>
+      <option *ngFor="let item of materials" value="{{item.id}}">{{item.name}}</option>
+    </select>
+  </div>
+</form>
+
