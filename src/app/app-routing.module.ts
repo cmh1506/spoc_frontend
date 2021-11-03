@@ -5,13 +5,17 @@ import {UserFormComponent} from "./user-form/user-form.component";
 import {MaterialverwendungListComponent} from "./materialverwendung-list/materialverwendung-list.component";
 import {VerpackungListComponent} from "./verpackung-list/verpackung-list.component";
 import {MaterialverwendungFormComponent} from "./materialverwendung-form/materialverwendung-form.component";
+import {VerpackungFormComponent} from "./verpackung-form/verpackung-form.component";
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: 'adduser', component: UserFormComponent },
   { path: 'materialverwendungen', component: MaterialverwendungListComponent },
   { path: 'verpackungen', component: VerpackungListComponent },
-  { path: 'materialverwendungForm', component: MaterialverwendungFormComponent }
+  { path: 'materialverwendungForm', component: MaterialverwendungFormComponent},
+  { path: 'verpackungForm', children: [
+      {path: 'edit/:id', component: VerpackungFormComponent}
+    ]}
 
 ];
 

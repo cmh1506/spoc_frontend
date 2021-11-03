@@ -1,1 +1,12 @@
-<p>verpackung-form works!</p>
+<form #form="ngForm" autocomplete="off"><!--(ngSubmit)="onSubmit(form)"-->
+  <div class="form-group">
+    <div class="row">
+      <div class="col-xl-3">
+        <h1 class="display-6">{{verpackung?.name}}</h1>
+      </div>
+
+    </div>
+  </div>
+</form>
+<app-materialverwendung-list></app-materialverwendung-list>
+<app-materialverwendung-form></app-materialverwendung-form>

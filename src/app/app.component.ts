@@ -5,6 +5,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {User} from "./domain/user";
 import {UserService} from "./service/user.service";
 import {NgForm} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,14 @@ export class AppComponent implements OnInit {
   public materials: Material[] | undefined;
   public users: User[] | undefined;
 
-  constructor(private materialService: MaterialService, private userService: UserService){}
+  constructor(private materialService: MaterialService,
+              private userService: UserService,
+              private router: Router){}
 
   ngOnInit() {
     this.getMaterials();
     this.getUsers();
+    this.router.navigate(['/verpackungen']);
   }
 
   public getUsers(): void {

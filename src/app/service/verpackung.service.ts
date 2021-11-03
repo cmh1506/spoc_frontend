@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../domain/user";
@@ -8,7 +8,7 @@ import {Verpackung} from "../domain/verpackung";
 @Injectable({
   providedIn: 'root'
 })
-export class VerpackungService {
+export class VerpackungService  {
 
   constructor(private http: HttpClient) { }
 

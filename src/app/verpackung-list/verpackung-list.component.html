@@ -8,7 +8,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let verpackung of verpackungs">
+      <tr *ngFor="let verpackung of verpackungs" (click)="showVerpackungDetail(verpackung.id)">
         <td>{{ verpackung.name }}</td>
         <td>{{ verpackung.user }}</td>
       </tr>
