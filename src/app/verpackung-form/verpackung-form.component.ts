@@ -1,7 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {Verpackung} from "../domain/verpackung";
 import {VerpackungService} from "../service/verpackung.service";
+import {Materialverwendung} from "../domain/materialverwendung";
+import {MaterialverwendungService} from "../service/materialverwendung.service";
+import {Material} from "../domain/material";
+import {Verarbeitung} from "../domain/verarbeitung";
+import {Recyclingverfahren} from "../domain/recyclingverfahren";
+import {MaterialService} from "../service/material.service";
+import {VerarbeitungService} from "../service/verarbeitung.service";
+import {RecyclingverfahrenService} from "../service/recyclingverfahren.service";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {FormBuilder, FormControl, FormGroup, NgForm} from "@angular/forms";
+import {StateService} from "../service/state.service";
+import {EnergierueckgewinnungService} from "../service/energierueckgewinnung.service";
+import {Energierueckgewinnung} from "../domain/energierueckgewinnung";
+import {Transportmittel} from "../domain/transportmittel";
+import {TransprotmittelService} from "../service/transprotmittel.service";
 
 @Component({
   selector: 'app-verpackung-form',
@@ -11,14 +26,125 @@ import {VerpackungService} from "../service/verpackung.service";
 export class VerpackungFormComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-              private verpackungService: VerpackungService) { }
-
-  verpackung!: Verpackung | undefined;
-
-  ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const id = Number(routeParams.get('id'));
-    this.verpackungService.findAll().subscribe(data => {this.verpackung = data.find(verpackung => verpackung.id === id)});
+              private verpackungService: VerpackungService,
+              private materialverwendungService: MaterialverwendungService,
+              public materialService: MaterialService,
+              public verarbeitungService: VerarbeitungService,
+              public energierueckgewinnungService: EnergierueckgewinnungService,
+              public recyclingverfahrenService: RecyclingverfahrenService,
+              public transprotmittelService: TransprotmittelService,
+              private dialog: MatDialog,
+              private fb: FormBuilder,
+              private router: Router,
+              private currentRoute: ActivatedRoute,
+              private stateService: StateService) {
   }
 
+  materialverwendungs: Materialverwendung[] = [];
+  materials!: Material[];
+  verarbeitungs!: Verarbeitung[];
+  energierueckgewinnungs!: Energierueckgewinnung[];
+  transportmittels!: Transportmittel[];
+  recyclingverfahrens!: Recyclingverfahren[];
+  verpackung!: Verpackung | undefined;
+  verpackungForm: any;
+  materialverwendungsForm = this.fb.group({
+    materialId: [''],
+    verarbeitungId: [''],
+    recyclingverfahrenId: [''],
+    energierueckgewinnungId: [''],
+    transportmittelId: [''],
+    recyclingQuote: [''],
+    menge: [''],
+    flaeche: [''],
+    dicke: [''],
+    transportstrecke: ['']
+  })
+
+  ngOnInit(): void {
+    let verpackungId = Number(this.currentRoute.snapshot.paramMap.get('id'));
+    this.verpackung = this.stateService.verpackungs.find(v => v.id == verpackungId)
+    this.verpackungForm = this.fb.group({
+      name: [this.verpackung?.name],
+      beschreibung: [this.verpackung?.beschreibung]
+
+    })
+    this.loadMaterialverwendungen(verpackungId);
+
+    this.materialService.getMaterials().subscribe(data => {
+      this.materials = data
+    });
+    this.verarbeitungService.getVerarbeitungs().subscribe(data => {
+      this.verarbeitungs = data
+    });
+    this.energierueckgewinnungService.getEnergierueckgewinnungs().subscribe(data => this.energierueckgewinnungs = data);
+    this.recyclingverfahrenService.getRecyclingverfahrens().subscribe(data => this.recyclingverfahrens = data);
+    this.transprotmittelService.getTransportmittels().subscribe(data => this.transportmittels = data);
+
+  }
+
+  private loadMaterialverwendungen(verpackungId: number) {
+    if (verpackungId != null && verpackungId != 0) {
+      this.materialverwendungService.findAllForVerpackungsId(verpackungId).subscribe(data => {
+        this.materialverwendungs = data;
+      })
+    }
+  }
+
+  @ViewChild('callMatVerwDialog') callMatVerwDialog!: TemplateRef<any>;
+
+
+  addOrEditMaterialverwendung() {
+    this.materialverwendungsForm.reset();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = false;
+    this.dialog.open(this.callMatVerwDialog, dialogConfig);
+  }
+
+  saveMaterialverwendung() {
+    let vid: number = 0;
+    if (this.verpackung?.id != 0) {
+      // @ts-ignore
+      vid = this.verpackung.id;
+    }
+    var body = {
+      materialId: this.materialverwendungsForm.controls['materialId'].value,
+      menge: this.materialverwendungsForm.controls['menge'].value,
+      flaeche: this.materialverwendungsForm.controls['flaeche'].value,
+      dicke: this.materialverwendungsForm.controls['dicke'].value,
+      verarbeitungId: this.materialverwendungsForm.controls['verarbeitungId'].value,
+      recyclingQuote: this.materialverwendungsForm.controls['recyclingQuote'].value,
+      recyclingverfahrenId: this.materialverwendungsForm.controls['recyclingverfahrenId'].value,
+      energierueckgewinnungId: this.materialverwendungsForm.controls['energierueckgewinnungId'].value,
+      transportstrecke: this.materialverwendungsForm.controls['transportstrecke'].value,
+      transportmittelId: this.materialverwendungsForm.controls['transportmittelId'].value,
+
+      verpackungId: vid
+    }
+    this.materialverwendungService.addMaterialVerwendung(body).subscribe(res => {
+      this.materialverwendungs.push(res)
+    });
+    this.dialog.closeAll();
+  }
+
+  deleteMaterialverwendung(id: number) {
+    this.materialverwendungService.deleteMaterialverwendung(id).subscribe(() => {
+      // @ts-ignore
+      this.loadMaterialverwendungen(this.verpackung.id);
+    });
+  }
+
+  onSubmit() {
+    var body = {
+      id: this.verpackung?.id,
+      name: this.verpackungForm.controls['name'].value,
+      beschreibung: this.verpackungForm.controls['beschreibung'].value,
+      userId: sessionStorage.getItem('userId')
+    }
+    this.verpackungService.addVerpackung(body).subscribe(res => {
+      this.verpackung = res;
+    })
+    console.warn(this.verpackungForm.value);
+  }
 }

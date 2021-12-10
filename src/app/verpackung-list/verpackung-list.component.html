@@ -4,13 +4,13 @@
       <thead class="thead-dark">
       <tr>
         <th scope="col">Name</th>
-        <th scope="col">User</th>
+        <th><a class="btn btn-outline-success" routerLink="/verpackungForm"><i class="fa fa-plus-square"></i>Neue Verpackung anlegen!</a></th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let verpackung of verpackungs" (click)="showVerpackungDetail(verpackung.id)">
+      <tr *ngFor="let verpackung of stateService.verpackungs" (click)="showVerpackungDetail(verpackung.id)">
         <td>{{ verpackung.name }}</td>
-        <td>{{ verpackung.user }}</td>
+        <td></td>
       </tr>
       </tbody>
     </table>

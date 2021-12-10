@@ -21,31 +21,7 @@ export class AppComponent implements OnInit {
               private router: Router){}
 
   ngOnInit() {
-    this.getMaterials();
-    this.getUsers();
-    this.router.navigate(['/verpackungen']);
-  }
-
-  public getUsers(): void {
-    this.userService.findAll().subscribe(
-      (response: User[]) => {
-        this.users = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
-
-  public getMaterials(): void {
-    this.materialService.getMaterials().subscribe(
-      (response: Material[]) => {
-        this.materials = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+    this.router.navigate(['/login']);
   }
 
   public onOpenModal(user: User, mode: string): void {
