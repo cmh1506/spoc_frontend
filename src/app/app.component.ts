@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Material} from "./domain/material";
 import {MaterialService} from "./service/material.service";
-import {HttpErrorResponse} from "@angular/common/http";
 import {User} from "./domain/user";
 import {UserService} from "./service/user.service";
 import {NgForm} from "@angular/forms";

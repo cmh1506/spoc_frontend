@@ -145,6 +145,6 @@ export class VerpackungFormComponent implements OnInit {
     this.verpackungService.addVerpackung(body).subscribe(res => {
       this.verpackung = res;
     })
-    console.warn(this.verpackungForm.value);
+
   }
 }
