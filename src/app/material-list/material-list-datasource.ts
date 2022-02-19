@@ -6,10 +6,6 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 import {Material} from "../domain/material";
 import {MaterialService} from "../service/material.service";
 
-
-
-
-
 /**
  * Data source for the MaterialList view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
@@ -24,10 +20,6 @@ export class MaterialListDataSource extends DataSource<Material> {
     super();
   }
 
-  public getMaterials(): void{
-    this.materialService.getMaterials().subscribe(data => this.data = data);
-    this.connect();
-  }
 
   /**
    * Connect this data source to the table. The table will only update when

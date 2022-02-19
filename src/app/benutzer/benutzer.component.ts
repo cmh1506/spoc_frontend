@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Injectable, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import {UserService} from "../service/user.service";
 import {User} from "../domain/user";
 import {BenutzerDataSource} from "./benutzer-datasource";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-benutzer',
@@ -18,19 +19,38 @@ export class BenutzerComponent implements AfterViewInit, OnInit {
   dataSource: BenutzerDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['username', 'password', 'role', 'email'];
+  displayedColumns = ['username', 'role', 'email', 'actions'];
 
-  constructor(private userService: UserService) {
-    this.dataSource = new BenutzerDataSource(userService);
+  constructor(private userService: UserService,
+              private router: Router) {
+    this.dataSource = new BenutzerDataSource();
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    this.userService.findAll().subscribe(data => {
+      this.dataSource.data = data;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;
+    });
+
+
   }
 
   ngOnInit(): void {
-    this.dataSource.getUser();
+  }
+
+
+  addBenutzer() {
+    this.router.navigate(['/benutzerform']);
+  }
+
+  deleteBenutzer(row: any) {
+    this.userService.deleteUser(row['id']).subscribe(() =>
+      this.userService.findAll().subscribe(data => {
+        this.dataSource.data = data;
+        this.dataSource?.paginator?._changePageSize(this.dataSource?.paginator?.pageSize);
+      })
+    );
   }
 }

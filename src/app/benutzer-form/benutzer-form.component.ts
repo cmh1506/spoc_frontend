@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {UserService} from "../service/user.service";
+import {Router} from "@angular/router";
+import {BenutzerComponent} from "../benutzer/benutzer.component";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {MatTable} from "@angular/material/table";
+import {User} from "../domain/user";
 
 @Component({
   selector: 'app-benutzer-form',
@@ -16,7 +22,8 @@ export class BenutzerFormComponent {
   });
 
   constructor(private fb: FormBuilder,
-              private userService: UserService) {}
+              private userService: UserService,
+              private router: Router) {}
 
   onSubmit(): void {
     var body = {
@@ -25,6 +32,9 @@ export class BenutzerFormComponent {
       role: this.benutzerForm.controls['role'].value,
       email: this.benutzerForm.controls['email'].value
     }
-    this.userService.addUser(body).subscribe();
+    this.userService.addUser(body).subscribe(() => {
+      this.router.navigate(['/users']);
+    });
+
   }
 }

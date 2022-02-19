@@ -5,6 +5,7 @@ import {User} from "./domain/user";
 import {UserService} from "./service/user.service";
 import {NgForm} from "@angular/forms";
 import {Router} from "@angular/router";
+import {BenutzerComponent} from "./benutzer/benutzer.component";
 
 @Component({
   selector: 'app-root',
@@ -23,14 +24,4 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  public onOpenModal(user: User, mode: string): void {
-    const button = document.createElement('button');
-    button.type = 'button';
-
-
-  }
-
-  public onAddUser(addForm: NgForm): void {
-
-  }
 }

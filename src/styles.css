@@ -57,3 +57,12 @@ a {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+table{
+  width: 50%;
+}
+.hintergrund {
+  height: 100%; background-size:cover; width:auto;
+  background-position:50% 50%;
+  background-color: #f7fcf3;
+}
+

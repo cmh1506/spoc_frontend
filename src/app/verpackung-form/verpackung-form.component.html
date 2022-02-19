@@ -1,56 +1,96 @@
 <app-header></app-header>
+<div class="card hintergrund">
 
-  <form [formGroup]="verpackungForm" (ngSubmit)="onSubmit()" class="card col-md-6">
-    <div class="card-body ">
-    <div class="form-group">
-      <div class="form-row">
-          <div class="form-group col-md-6">
-          <label>Name</label>
-          <input id="name" type="text" formControlName="name" class="form-control" >
+  <div class="card-body ">
+    <form [formGroup]="verpackungForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="form-row">
+          <div class="form-group col-md-2">
+            <label>Name</label>
+            <input id="name" type="text" formControlName="name" class="form-control">
           </div>
-        <div class="form-group col-md-6">
-          <label>Beschreibung</label>
-          <input id="beschreibung" type="text" formControlName="beschreibung" class="form-control" >
+          <div class="form-group col-md-6">
+            <label>Funktionelle Einheit und Beschreibung</label>
+            <textarea id="beschreibung" type="text" formControlName="beschreibung" class="form-control"></textarea>
+          </div>
+          <div class="form-group col-md-4" style="width: 100%; align-content: baseline" ><img src="assets/logo.png" width="150" height="180" style="float: right"></div>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Submit</button>
-    </div>
-    </div>
-  </form>
+      <div class="form-group">
+        <button type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Submit</button>
+      </div>
+    </form>
 
 
-<div class="card">
+    <table class="table" >
+      <thead class="thead">
+
+      <tr class="d-flex">
+        <th class="col-1">Umweltwirkung Gesamtverpackung:</th>
+        <th class="col-1">CO<sub>2</sub>-equiv. [g]</th>
+        <th class="col-1">Energie [kJ]</th>
+      </tr>
+      </thead>
+      <tr class="d-flex">
+        <td class="col-1">Material:</td>
+        <td class="col-1">{{materialCO2Aufwand.toFixed(2)}} </td>
+        <td class="col-1">{{materialAufwandEnergie.toFixed(2)}} </td>
+      </tr>
+      <tr class="d-flex">
+        <td class="col-1">Cradle to Gate:</td>
+        <td class="col-1">{{cradleToGate.toFixed(2)}} </td>
+        <td class="col-1">{{cradleToGateEnergie.toFixed(2)}} </td>
+      </tr>
+      <tr class="d-flex">
+        <td class="col-1">Cradle to Grave:</td>
+        <td class="col-1">{{cradleToGrave.toFixed(2)}} </td>
+        <td class="col-1">{{cradleToGraveEnergie.toFixed(2)}} </td>
+      </tr>
+      <tr class="d-flex">
+        <td class="col-1">Cradle to Grave mit CO<sub>2</sub>-Gutschrift:</td>
+        <td class="col-1">{{cradleToGraveCO2Gutschrift.toFixed(2)}} </td>
+        <td class="col-1">{{cradleToGraveGutschriftEnergie.toFixed(2)}} </td>
+      </tr>
+      <tr class="d-flex">
+        <td class="col-1">Cradle to Grave mit indirektem CO<sub>2</sub>-für Biofuel:</td>
+        <td class="col-1">{{cradleToGraveCO2GutschriftBioFuel.toFixed(2)}} </td>
+        <td class="col-1"></td>
+      </tr>
+    </table>
+
+
+  </div>
+
+
   <div class="card-body">
     <table class="table table-bordered table-striped">
 
-      <thead class="thead-dark">
+      <thead class="thead">
       <tr>
-        <td colspan="10">Eingabe für eine Verpackungseinheit</td>
-        <td colspan="3">Energieaufwand nach Materialen und Recycling</td>
-        <td colspan="1">Energieaufwand Verarbeitung</td>
+        <td colspan="10">Eingaben für die Verpackungskomponenten</td>
+        <td colspan="2">Aufwand Materialien</td>
+        <td colspan="2">Aufwand Verarbeitung</td>
         <td colspan="2">Verbrennung mit Energienutzung</td>
-        <td colspan="1">CO<sub>2</sub>-Gutschrift aus Verbrennung</td>
-        <td colspan="1">Bio</td>
-        <td colspan="2">Transport Einzelmaterialie</td>
+        <td colspan="1">CO<sub>2</sub>-Gutschrift<br>aus Verbrennung</td>
+        <td colspan="1">Indirekt CO<sub>2</sub>-<br>für Biofuel</td>
+        <td colspan="2">Transport Einzelmaterialien</td>
         <td colspan="1"></td>
       </tr>
       <tr>
         <th scope="col">Material</th>
-        <th scope="col">Materialmenge [g]</th>
+        <th scope="col">Material-<br>menge [g]</th>
         <th scope="col">Fläche [cm<sup>2</sup>]</th>
         <th scope="col">Dicke [&micro;m]</th>
         <th scope="col">Verarbeitung</th>
-        <th scope="col">Energierueckgewinnung</th>
-        <th scope="col">Recycling-Methode</th>
-        <th scope="col">Recycling-Quote</th>
-        <th scope="col">Transport Strecke [km]</th>
-        <th scope="col">Transportmittel</th>
-        <th scope="col">Fossile Masse [g}</th>
+        <th scope="col">Entsorgung</th>
+        <th scope="col">Recycling-<br>Methode</th>
+        <th scope="col">Recycling-<br>Quote [%}</th>
+        <th scope="col">Transport [km]</th>
+        <th scope="col">Transport-<br>mittel</th>
         <th scope="col">CO<sub>2</sub>-eq. [g]</th>
         <th scope="col">Energie [kJ]</th>
-        <th scope="col">Verarbeitung [kJ]</th>
+        <th scope="col">CO<sub>2</sub>-eq. [g]</th>
+        <th scope="col">Energie [kJ]</th>
         <th scope="col">CO<sub>2</sub>-eq. [g]</th>
         <th scope="col">Energie [kJ]</th>
         <th scope="col">CO<sub>2</sub>-eq. [g]</th>
@@ -76,19 +116,22 @@
         <td>{{ materialverwendung.transportstrecke }}</td>
         <td>{{ materialverwendung.transportmittel }}</td>
 
-        <td>{{ materialverwendung.fossileMasse }}</td>
-        <td>{{ materialverwendung.materialCO2Eq }}</td>
-        <td>{{ materialverwendung.materialEnergie }}</td>
-        <td>{{ materialverwendung.energieAufwandVerarbeitung }}</td>
-        <td>{{ materialverwendung.verbrennungENutzCo2Eq }}</td>
-        <td>{{ materialverwendung.verbrennungENutzEnergie }}</td>
-        <td>{{ materialverwendung.gutschriftVerbrennungCo2Eq }}</td>
-        <td>{{ materialverwendung.gutschriftBioCo2Eq }}</td>
-        <td>{{ materialverwendung.transportCo2Eq }}</td>
-        <td>{{ materialverwendung.transportEnergie }}</td>
+
+        <td class="berechnet">{{ materialverwendung.materialCO2Eq }}</td>
+        <td class="berechnet">{{ materialverwendung.materialEnergie }}</td>
+        <td class="berechnet">{{ materialverwendung.co2AufwandVerarbeitung }}</td>
+        <td class="berechnet">{{ materialverwendung.energieAufwandVerarbeitung }}</td>
+        <td class="berechnet">{{ materialverwendung.verbrennungCo2Eq }}</td>
+        <td class="berechnet">{{ materialverwendung.verbrennungENutzEnergie }}</td>
+        <td class="berechnet">{{ materialverwendung.gutschriftVerbrennungCo2Eq }}</td>
+        <td class="berechnet">{{ materialverwendung.indirectco2Biofuel }}</td>
+        <td class="berechnet">{{ materialverwendung.transportCo2Eq }}</td>
+        <td class="berechnet">{{ materialverwendung.transportEnergie }}</td>
 
         <td>
-          <button type="button" class="btn btn-danger" (click)="deleteMaterialverwendung(materialverwendung.id)">Delete</button>
+          <button type="button" class="btn btn-danger" (click)="deleteMaterialverwendung(materialverwendung.id)">
+            Delete
+          </button>
 
         </td>
       </tr>
@@ -101,69 +144,74 @@
 
   <form [formGroup]="materialverwendungsForm">
     <div class="form-group">
-    <div class="form-row">
-      <div class="form-group col-xl-2">
-        <label>Material</label>
-        <select id="materialId" #footItemSelect formControlName="materialId" class="form-control">
-          <option *ngFor="let item of materials" value="{{item.id}}">{{item.name}}</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group col-xl-2">
+          <label>Material</label>
+          <select id="materialId" #footItemSelect formControlName="materialId" class="form-control">
+            <option *ngFor="let item of stateService.materials" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-xl-2">
+          <label>Materialmenge [g]</label>
+          <input type="text" (input)="disableFlaecheDicke()" formControlName="menge" class="form-control">
+        </div>
+        <div class="form-group col-xl-2">
+          <label>Fläche [cm<sup>2</sup>]</label>
+          <input id="flaeche" (input)="disableMenge()" type="text" formControlName="flaeche" class="form-control">
+        </div>
+        <div class="form-group col-xl-2">
+          <label>Dicke [&micro;m]</label>
+          <input type="text" (input)="disableMenge()" formControlName="dicke" class="form-control">
+        </div>
+        <div class="form-group col-xl-2">
+          <label>Verarbeitung</label>
+          <select id="verarbeitungId" #footItemSelect formControlName="verarbeitungId" class="form-control">
+            <option *ngFor="let item of verarbeitungs" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group col-xl-2">
-        <label>Materialmenge [g]</label>
-        <input type="text" matInput formControlName="menge" class="form-control">
-      </div>
-      <div class="form-group col-xl-2">
-        <label>Fläche [cm<sup>2</sup>]</label>
-        <input type="text" matInput formControlName="flaeche" class="form-control">
-      </div>
-      <div class="form-group col-xl-2">
-        <label>Dicke [&micro;m]</label>
-        <input type="text" matInput formControlName="dicke" class="form-control">
-      </div>
-      <div class="form-group col-xl-2">
-        <label>Verarbeitung</label>
-        <select id="verarbeitungId" #footItemSelect formControlName="verarbeitungId" class="form-control">
-          <option *ngFor="let item of verarbeitungs" value="{{item.id}}">{{item.name}}</option>
-        </select>
-      </div>
-    </div>
       <div class="form-row">
         <div class="form-group col-xl-2">
           <label>Recyclingquote [%]</label>
-          <input type="text" matInput formControlName="recyclingQuote" class="form-control">
+          <input type="text" formControlName="recyclingQuote" class="form-control" min="0" max="100">
         </div>
-      <div class="form-group col-xl-2">
-        <label>Energierueckgewinnung</label>
-        <select id="energierueckgewinnungId" #footItemSelect formControlName="energierueckgewinnungId" class="form-control">
-          <option *ngFor="let item of energierueckgewinnungs" value="{{item.id}}">{{item.name}}</option>
-        </select>
-      </div>
-      <div class="form-group col-xl-2">
-        <label>Recyclingverfahren</label>
-        <select id="recyclingverfahrenId" #footItemSelect formControlName="recyclingverfahrenId" class="form-control">
-          <option *ngFor="let item of recyclingverfahrens" value="{{item.id}}">{{item.name}}</option>
-        </select>
-      </div>
-      <div class="form-group col-xl-2">
-        <label>Transport Strecke [km]</label>
-        <input type="text" matInput formControlName="transportstrecke" class="form-control">
-      </div>
-      <div class="form-group col-xl-2">
-        <label>Transportmittel</label>
-        <select id="transportmittelId" #footItemSelect formControlName="transportmittelId" class="form-control">
-          <option *ngFor="let item of transportmittels" value="{{item.id}}">{{item.name}}</option>
-        </select>
-      </div>
-      <div class="form-group col-xl-2">
-        <div>
-          <button type="button" class="btn btn-primary" style="position: absolute; left: 0; bottom: 0;" (click)="saveMaterialverwendung()">Hinzufügen</button>
+        <div class="form-group col-xl-2">
+          <label>Entsorgung</label>
+          <select id="energierueckgewinnungId" #footItemSelect formControlName="energierueckgewinnungId"
+                  class="form-control">
+            <option *ngFor="let item of energierueckgewinnungs" value="{{item.id}}">{{item.name}}</option>
+          </select>
         </div>
+        <div class="form-group col-xl-2">
+          <label>Recyclingverfahren</label>
+          <select id="recyclingverfahrenId" #footItemSelect formControlName="recyclingverfahrenId" class="form-control">
+            <option *ngFor="let item of recyclingverfahrens" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-xl-2">
+          <label>Transport [km]</label>
+          <input type="text" formControlName="transportstrecke" class="form-control">
+        </div>
+        <div class="form-group col-xl-2">
+          <label>Transportmittel</label>
+          <select id="transportmittelId" #footItemSelect formControlName="transportmittelId" class="form-control">
+            <option *ngFor="let item of transportmittels" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-xl-2">
+          <div>
+            <button type="button" class="btn btn-primary" style="position: absolute; left: 0; bottom: 0;"
+                    (click)="saveMaterialverwendung()">Hinzufügen
+            </button>
+          </div>
 
+        </div>
       </div>
-    </div>
     </div>
   </form>
-  <div >
-    <button type="button" style="float: right;" class="btn btn-outline-dark m-lg-1" [mat-dialog-close]><i class="fa fa-window-close"></i> Close</button>
+  <div>
+    <button type="button" style="float: right;" class="btn btn-outline-dark m-lg-1" [mat-dialog-close]><i
+      class="fa fa-window-close"></i> Close
+    </button>
   </div>
 </ng-template>

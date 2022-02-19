@@ -5,6 +5,7 @@ import {User} from "../domain/user";
 import {environment} from "../../environments/environment";
 import {Verpackung} from "../domain/verpackung";
 import {Materialverwendung} from "../domain/materialverwendung";
+import {StateService} from "./state.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class VerpackungService  {
 
   materialverwendungs!: Materialverwendung[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private stateService: StateService) { }
 
   public findAll(): Observable<Verpackung[]> {
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(sessionStorage.getItem("username") + ':' + sessionStorage.getItem("password")) });
@@ -32,5 +34,17 @@ export class VerpackungService  {
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(sessionStorage.getItem("username") + ':' + sessionStorage.getItem("password")) });
     let url = `${environment.apiURL}verpackung/addVerpackung`;
     return this.http.post<Verpackung>(url, body, {headers});
+  }
+
+  deleteVerpackung(id: number) {
+    const headers = this.stateService.headers;
+    let url = `${environment.apiURL}verpackung/delete/` + id;
+    return this.http.delete(url, {headers});
+  }
+
+  findVerpackungById(id: any) {
+    const headers = this.stateService.headers;
+    let url = `${environment.apiURL}verpackung/find/` + id;
+    return this.http.get<Verpackung>(url, {headers});
   }
 }

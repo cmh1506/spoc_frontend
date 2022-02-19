@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import {FormsModule} from "@angular/forms";
-import {VerpackungListComponent} from "./verpackung-list/verpackung-list.component";
 import { VerpackungFormComponent } from './verpackung-form/verpackung-form.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +34,8 @@ import { RecyclingverfahrenListComponent } from './recyclingverfahren-list/recyc
 import {BenutzerComponent} from "./benutzer/benutzer.component";
 import { MaterialListComponent } from './material-list/material-list.component';
 import { MaterialFormComponent } from './material-form/material-form.component';
+import {VerpackungListComponent} from "./verpackung-list/verpackung-list.component";
+import { TransportmittelListComponent } from './transportmittel-list/transportmittel-list.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { MaterialFormComponent } from './material-form/material-form.component';
     BenutzerFormComponent,
     RecyclingverfahrenListComponent,
     MaterialListComponent,
-    MaterialFormComponent
+    MaterialFormComponent,
+    TransportmittelListComponent
   ],
     imports: [
         BrowserModule,

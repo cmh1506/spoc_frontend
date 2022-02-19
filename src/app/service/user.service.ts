@@ -24,4 +24,9 @@ export class UserService {
     return this.http.post<User>(url, body, {headers});
   }
 
+  deleteUser(id: number) {
+    const headers = this.stateService.headers;
+    let url = `${environment.apiURL}user/delete/` + id;
+    return this.http.delete(url, {headers});
+  }
 }

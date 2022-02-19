@@ -16,13 +16,8 @@ export class BenutzerDataSource extends DataSource<User> {
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  constructor(private userService: UserService) {
+  constructor() {
     super();
-  }
-
-  getUser(): void {
-    this.userService.findAll().subscribe(data => this.data = data);
-    this.connect();
   }
 
   /**

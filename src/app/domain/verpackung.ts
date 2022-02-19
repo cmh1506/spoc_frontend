@@ -4,4 +4,5 @@ export class Verpackung {
   userId!: number;
   user!: string;
   beschreibung!: string;
+
 }

@@ -1,19 +1,40 @@
 <app-header></app-header>
-<div class="card my-5">
-  <div class="card-body">
-    <table class="table table-bordered table-striped">
-      <thead class="thead-dark">
-      <tr>
-        <th scope="col">Name</th>
-        <th><a class="btn btn-outline-success" routerLink="/verpackungForm"><i class="fa fa-plus-square"></i>Neue Verpackung anlegen!</a></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let verpackung of stateService.verpackungs" (click)="showVerpackungDetail(verpackung.id)">
-        <td>{{ verpackung.name }}</td>
-        <td></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="mat-elevation-z0" >
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let row">{{row.id}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{row.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="beschreibung">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Beschreibung</th>
+      <td mat-cell *matCellDef="let row">{{ (row.beschreibung.length>6)? (row.beschreibung | slice:0:50)+'...':(row.beschreibung) }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef><button mat-button color="primary" (click)="addVerpackung()">Verpackung hinzufügen</button></th>
+      <td mat-cell *matCellDef="let row"><button mat-button color="warn" (click)="deleteVerpackung(row)">Löschen</button>
+        <button mat-button (click)="showVerpackungDetail(row.id)">Bearbeiten</button></td>
+
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page">
+  </mat-paginator>
 </div>

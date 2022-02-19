@@ -20,15 +20,14 @@ export class Materialverwendung{
   recyclingQuote!: number;
   transportstrecke!: number;
 
-  fossileMasse!: number;
   materialCO2Eq!: number;
   materialEnergie!: number;
   energieAufwandVerarbeitung!: number;
-  verbrennungENutzCo2Eq!: number;
+  verbrennungCo2Eq!: number;
   verbrennungENutzEnergie!: number;
   gutschriftVerbrennungCo2Eq!: number;
-  gutschriftBioCo2Eq!: number;
   transportCo2Eq!: number;
   transportEnergie!: number;
-
+  indirectco2Biofuel!: number;
+  co2AufwandVerarbeitung!: number;
 }

@@ -3,8 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Materialverwendung} from "../domain/materialverwendung";
-import {AbstractControl, FormGroup} from "@angular/forms";
-import {Verpackung} from "../domain/verpackung";
 import {StateService} from "./state.service";
 
 @Injectable({
@@ -30,7 +28,7 @@ export class MaterialverwendungService {
   deleteMaterialverwendung(id: number) {
     //const headers = this.stateService.headers;
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(sessionStorage.getItem("username") + ':' + sessionStorage.getItem("password")) });
-    let url = `${environment.apiURL}materialverwendung/delete/` +id;
+    let url = `${environment.apiURL}materialverwendung/delete/` + id;
     return this.http.delete(url, {headers});
 
   }
