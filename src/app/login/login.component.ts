@@ -9,6 +9,7 @@ import {User} from "../domain/user";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  private data: any;
 
   constructor(private loginService: LoginService, private router:Router) { }
 
@@ -23,10 +24,10 @@ export class LoginComponent implements OnInit {
     let resp = this.loginService.login(this.username, this.password);
     sessionStorage.setItem("username", this.username);
     sessionStorage.setItem("password", this.password);
-    resp.subscribe(data => {
-      sessionStorage.setItem("userId", data);
+    /*resp.subscribe((data: any) => {
+      this.data = data;
       this.router.navigate(["/verpackungen"])
-    });
+    });*/
   }
 
 }

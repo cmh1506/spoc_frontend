@@ -7,17 +7,17 @@
         <div class="form-row">
           <div class="form-group col-md-2">
             <label>Name</label>
-            <input id="name" type="text" formControlName="name" class="form-control">
+            <input id="name" type="text" formControlName="name" class="form-control" required>
           </div>
           <div class="form-group col-md-6">
             <label>Funktionelle Einheit und Beschreibung</label>
-            <textarea id="beschreibung" type="text" formControlName="beschreibung" class="form-control"></textarea>
+            <textarea id="beschreibung" type="text" formControlName="beschreibung" class="form-control" required></textarea>
           </div>
           <div class="form-group col-md-4" style="width: 100%; align-content: baseline" ><img src="assets/logo.png" width="150" height="180" style="float: right"></div>
         </div>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Submit</button>
+        <button type="submit" class="btn btn-dark" [disabled]="verpackungForm.invalid"><i class="fa fa-database"></i> Submit</button>
       </div>
     </form>
 
@@ -62,7 +62,7 @@
   </div>
 
 
-  <div class="card-body">
+  <div class="card-body" id="mVerwList" hidden>
     <table class="table table-bordered table-striped">
 
       <thead class="thead">
@@ -80,7 +80,7 @@
         <th scope="col">Material</th>
         <th scope="col">Material-<br>menge [g]</th>
         <th scope="col">Fläche [cm<sup>2</sup>]</th>
-        <th scope="col">Dicke [&micro;m]</th>
+        <th scope="col">Dicke [&micro;m] /<br> Flächen-<br>gewicht [g/m<sup>2</sup>]</th>
         <th scope="col">Verarbeitung</th>
         <th scope="col">Entsorgung</th>
         <th scope="col">Recycling-<br>Methode</th>
@@ -148,7 +148,7 @@
         <div class="form-group col-xl-2">
           <label>Material</label>
           <select id="materialId" #footItemSelect formControlName="materialId" class="form-control">
-            <option *ngFor="let item of stateService.materials" value="{{item.id}}">{{item.name}}</option>
+            <option *ngFor="let item of stateService.materials" value="{{item.id}}">{{item.name | slice:5}}</option>
           </select>
         </div>
         <div class="form-group col-xl-2">
@@ -160,7 +160,7 @@
           <input id="flaeche" (input)="disableMenge()" type="text" formControlName="flaeche" class="form-control">
         </div>
         <div class="form-group col-xl-2">
-          <label>Dicke [&micro;m]</label>
+          <label>Dicke [&micro;m] / Flächengewicht</label>
           <input type="text" (input)="disableMenge()" formControlName="dicke" class="form-control">
         </div>
         <div class="form-group col-xl-2">

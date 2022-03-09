@@ -75,6 +75,9 @@ export class VerpackungFormComponent implements OnInit {
   ngOnInit(): void {
     let verpackungId = Number(this.currentRoute.snapshot.paramMap.get('id'));
     this.verpackung = this.stateService.verpackungs.find(v => v.id == verpackungId);
+    if(this.verpackung){
+      document.getElementById("mVerwList")?.removeAttribute('hidden');
+    }
     this.verpackungForm = this.fb.group({
       name: [this.verpackung?.name],
       beschreibung: [this.verpackung?.beschreibung]
@@ -111,7 +114,7 @@ export class VerpackungFormComponent implements OnInit {
           cradleToGate = cradleToGate + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung;
           cradleToGrave = cradleToGrave + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq;
           cradleToGraveCO2Gutschrift = cradleToGraveCO2Gutschrift + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq - m.gutschriftVerbrennungCo2Eq;
-          cradleToGraveCO2GutschriftBioFuel = cradleToGraveCO2Gutschrift + m.indirectco2Biofuel;
+          cradleToGraveCO2GutschriftBioFuel = cradleToGraveCO2GutschriftBioFuel + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq - m.gutschriftVerbrennungCo2Eq + m.indirectco2Biofuel;
           materialAufwandEnergie = materialAufwandEnergie + m.materialEnergie;
           cradleToGateEnergie = cradleToGateEnergie + m.materialEnergie + m.transportEnergie + m.energieAufwandVerarbeitung;
           cradleToGraveEnergie = cradleToGraveEnergie + m.materialEnergie + m.transportEnergie + m.energieAufwandVerarbeitung;
@@ -136,15 +139,6 @@ export class VerpackungFormComponent implements OnInit {
 
 
   addOrEditMaterialverwendung() {
-    var body = {
-      id: this.verpackung?.id,
-      name: this.verpackungForm.controls['name'].value,
-      beschreibung: this.verpackungForm.controls['beschreibung'].value,
-      userId: sessionStorage.getItem('userId')
-    }
-    this.verpackungService.addVerpackung(body).subscribe(res => {
-      this.verpackung = res;
-    })
     this.materialverwendungsForm.reset();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -174,16 +168,16 @@ export class VerpackungFormComponent implements OnInit {
     this.materialverwendungService.addMaterialVerwendung(body).subscribe(res => {
       this.materialverwendungs.push(res)
 
-      this.materialCO2Aufwand = this.materialCO2Aufwand+  res.materialCO2Eq;
-      this.cradleToGate = this.cradleToGate + this.materialCO2Aufwand + res.transportCo2Eq + res.co2AufwandVerarbeitung;
-      this.cradleToGrave = this.cradleToGate + res.verbrennungCo2Eq;
-      this.cradleToGraveCO2Gutschrift = this.cradleToGate - res.gutschriftVerbrennungCo2Eq;
-      this.cradleToGraveCO2GutschriftBioFuel = this.cradleToGate  - res.gutschriftVerbrennungCo2Eq + res.indirectco2Biofuel;
+      this.materialCO2Aufwand = this.materialCO2Aufwand + res.materialCO2Eq;
+      this.cradleToGate = this.cradleToGate + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung;
+      this.cradleToGrave = this.cradleToGrave + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq;
+      this.cradleToGraveCO2Gutschrift = this.cradleToGraveCO2Gutschrift + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq - res.gutschriftVerbrennungCo2Eq;
+      this.cradleToGraveCO2GutschriftBioFuel = this.cradleToGraveCO2GutschriftBioFuel + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq - res.gutschriftVerbrennungCo2Eq + res.indirectco2Biofuel;
       this.materialAufwandEnergie = this.materialAufwandEnergie + res.materialEnergie;
       this.cradleToGateEnergie = this.cradleToGateEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung;
       this.cradleToGraveEnergie = this.cradleToGraveEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung
       this.cradleToGraveGutschriftEnergie = this.cradleToGraveGutschriftEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung - res.verbrennungENutzEnergie;
-      this.cradleToGraveGutschriftBioFuelEnergie = this.cradleToGraveGutschriftBioFuelEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung - res.verbrennungENutzEnergie;
+      //this.cradleToGraveGutschriftBioFuelEnergie = this.cradleToGraveGutschriftBioFuelEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung - res.verbrennungENutzEnergie;
     });
     this.dialog.closeAll();
   }
@@ -205,6 +199,8 @@ export class VerpackungFormComponent implements OnInit {
     }
     this.verpackungService.addVerpackung(body).subscribe(res => {
       this.verpackung = res;
+      // @ts-ignore
+      document.getElementById("mVerwList").removeAttribute('hidden');
     })
 
   }

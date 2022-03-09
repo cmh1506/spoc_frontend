@@ -20,7 +20,7 @@ export class VerpackungListComponent implements AfterViewInit, OnInit  {
   dataSource: VerpackungListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name', 'beschreibung', 'actions'];
+  displayedColumns = ['id', 'name', 'beschreibung', 'actions'];
 
   constructor(private verpackungService: VerpackungService,
               private router: Router,

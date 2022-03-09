@@ -14,7 +14,8 @@ export class MaterialService {
               private stateService: StateService) { }
 
   public getMaterials(): Observable<Material[]>{
-    return this.http.get<Material[]>(`${environment.apiURL}material/allMaterials`);
+    const headers = this.stateService.headers;
+    return this.http.get<Material[]>(`${environment.apiURL}material/allMaterials`, {headers});
   }
 
   public addMaterial(body: any):  Observable<Material>{

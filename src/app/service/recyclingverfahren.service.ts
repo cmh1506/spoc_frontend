@@ -3,16 +3,18 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Recyclingverfahren} from "../domain/recyclingverfahren";
 import {environment} from "../../environments/environment";
+import {StateService} from "./state.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecyclingverfahrenService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private stateService: StateService) { }
 
   public getRecyclingverfahrens(): Observable<Recyclingverfahren[]>{
-    return this.http.get<Recyclingverfahren[]>(`${environment.apiURL}recyclingverfahren/allRecyclingverfahrens`);
+    const headers = this.stateService.headers;
+    return this.http.get<Recyclingverfahren[]>(`${environment.apiURL}recyclingverfahren/allRecyclingverfahrens`, {headers});
   }
 
   public addRecyclingverfahren(recyclingverfahren: Recyclingverfahren): Observable<Recyclingverfahren>{
