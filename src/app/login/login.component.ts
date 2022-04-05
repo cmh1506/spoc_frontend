@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../service/login.service";
 import {User} from "../domain/user";
 
@@ -9,25 +9,26 @@ import {User} from "../domain/user";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private data: any;
 
-  constructor(private loginService: LoginService, private router:Router) { }
+  constructor(private loginService: LoginService, private router:Router, private route: ActivatedRoute) { }
 
   username!: string;
   password!: string;
   user!: User;
+  notfound!: string | null;
 
   ngOnInit(): void {
+    this.notfound = this.route.snapshot.paramMap.get('notfound');
   }
 
   doLogin() {
-    let resp = this.loginService.login(this.username, this.password);
     sessionStorage.setItem("username", this.username);
     sessionStorage.setItem("password", this.password);
-    /*resp.subscribe((data: any) => {
-      this.data = data;
-      this.router.navigate(["/verpackungen"])
-    });*/
+    this.loginService.login(this.username, this.password);
+  }
+
+  doRegister(){
+    this.router.navigate(["/registration"]);
   }
 
 }

@@ -1,0 +1,44 @@
+
+<form *ngIf="!user" [formGroup]="registrationForm" novalidate (ngSubmit)="onSubmit()" style="width: 50%">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Bitte Registrieren</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Name" formControlName="username">
+            <mat-error *ngIf="registrationForm.controls['username'].hasError('required')">
+              First name is <strong>required</strong>
+            </mat-error>
+            <span *ngIf="fehler.get('423')" class="text-danger">{{fehler.get('423')}}</span>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="registrationForm.controls['email'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+            <span *ngIf="fehler.get('422')" class="text-danger">{{fehler.get('422')}}</span>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+<h1 *ngIf="user"><p>Hallo {{user.username}}!</p>
+  <p>Sie wurden erfolgreich registriert. Wir haben Ihnen eine Mail mit Ihrem initialen Passwort geschickt. <a routerLink='/login' >Bitte melden Sie sich an!</a></p>
+
+
+</h1>
+

@@ -15,7 +15,8 @@ export class UserService {
               private stateService: StateService) { }
 
   public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiURL}user/users`);
+    const headers = this.stateService.headers;
+    return this.http.get<User[]>(`${environment.apiURL}user/users`, {headers});
   }
 
   addUser(body: any) {
@@ -29,4 +30,10 @@ export class UserService {
     let url = `${environment.apiURL}user/delete/` + id;
     return this.http.delete(url, {headers});
   }
+
+    changePW(body: { password: any; id: string | null }) {
+      const headers = this.stateService.headers;
+      let url = `${environment.apiURL}user/changePW`;
+      return this.http.post(url, body, {headers});
+    }
 }

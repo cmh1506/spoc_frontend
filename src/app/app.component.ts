@@ -3,9 +3,10 @@ import {Material} from "./domain/material";
 import {MaterialService} from "./service/material.service";
 import {User} from "./domain/user";
 import {UserService} from "./service/user.service";
-import {NgForm} from "@angular/forms";
 import {Router} from "@angular/router";
-import {BenutzerComponent} from "./benutzer/benutzer.component";
+import {HttpClient} from "@angular/common/http";
+
+
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,20 @@ export class AppComponent implements OnInit {
 
   constructor(private materialService: MaterialService,
               private userService: UserService,
-              private router: Router){}
+              private router: Router,
+              private http: HttpClient){
+  }
 
   ngOnInit() {
     this.router.navigate(['/login']);
+  }
+  logout() {
+    this.http.post('logout', {}).subscribe(() => {
+      this.router.navigateByUrl('/login');
+    }, (error)=>{
+      console.log('error from service', error);
+      this.router.navigate(["/login/emailTaken" ]);
+    });
   }
 
 }

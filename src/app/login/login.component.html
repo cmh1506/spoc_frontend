@@ -1,9 +1,12 @@
+<div *ngIf="notfound=='true'; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock><h1>Passwort oder Username waren falsch. Bitte nochmal probieren.</h1></ng-template>
+<ng-template #elseBlock><h1>Bitte anmelden!</h1></ng-template>
 <div class="background-wrap">
   <div class="background"></div>
 </div>
 
 <form id="accesspanel" action="">
-  <h3 id="litheader">Bitte anmelden!</h3>
+
   <div class="inset">
     <p>
       <input type="text" name="username" [(ngModel)]="username" id="email" placeholder="username">
@@ -14,5 +17,7 @@
   </div>
   <p class="p-container">
     <input type="submit" name="Login" id="go" value="Login" (click)="doLogin()">
+    <input type="submit" name="Register" id="registerBtn" value="Register" (click)="doRegister()">
   </p>
 </form>
+

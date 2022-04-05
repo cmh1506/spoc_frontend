@@ -12,7 +12,6 @@ import {Router} from "@angular/router";
 export class LoginService {
   authenticated = false;
   private res: Object | undefined;
-
   constructor(private http:HttpClient,
               private stateService: StateService,
               private router: Router) { }
@@ -20,36 +19,15 @@ export class LoginService {
   public login(username: string, password: string){
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     this.stateService.headers = headers;
-    return this.http.get(`${environment.apiURL}user`,{headers}).subscribe(res => {
-      // @ts-ignore
-        sessionStorage.setItem("userId", res)
+    return this.http.get<User>(`${environment.apiURL}user`,{headers}).subscribe(res => {
+        sessionStorage.setItem("userId", res["id"].toString());
+        sessionStorage.setItem("userRole", res["role"]);
+        sessionStorage.setItem("user", JSON.stringify(res));
         this.router.navigate(["/verpackungen"]);
+      }, (error)=>{
+      console.log('error from service', error);
+      this.router.navigate(["/login/true" ]);
     }
-
     );
-
-    /*this.credentials.username = username;
-    this.credentials.password = password;
-
-    this.authenticate(this.credentials, () => {
-      this.router.navigateByUrl('/');
-    });
-    return false;*/
-  }
-  public authenticate(credentials: { username: any; password: any; }, callback: { (): void; (): any; }) {
-    const headers = new HttpHeaders(credentials ? {
-      authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-    } : {});
-
-    this.http.get(`${environment.apiURL}user`, {headers: headers}).subscribe(response => {
-      // @ts-ignore
-      if (response['name']) {
-        this.authenticated = true;
-      } else {
-        this.authenticated = false;
-      }
-      return callback && callback();
-    });
-
   }
 }
