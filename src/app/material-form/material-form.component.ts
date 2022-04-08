@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {MaterialService} from "../service/material.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {StateService} from "../service/state.service";
 
 @Component({
@@ -9,12 +9,12 @@ import {StateService} from "../service/state.service";
   templateUrl: './material-form.component.html',
   styleUrls: ['./material-form.component.css']
 })
-export class MaterialFormComponent {
+export class MaterialFormComponent implements OnInit {
   materialForm = this.fb.group({
     a_name: [null, Validators.required],
     fossiles: [null, Validators.required],
     prozessenergie: [null, Validators.required],
-    productionCO2: null,
+    productionCO2: [null, Validators.required],
     bioco2prod: [null, Validators.required],
     bioFuelCO2: [null, Validators.required],
     dichte: [null, Validators.required],
@@ -26,16 +26,41 @@ export class MaterialFormComponent {
   });
 
   hasUnitNumber = false;
+  materialId: number | undefined;
 
   constructor(private fb: FormBuilder,
               private materialService: MaterialService,
               private router: Router,
               private stateService: StateService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              private currentRoute: ActivatedRoute) {
   }
+
+  ngOnInit(): void {
+      this.materialId = Number(this.currentRoute.snapshot.paramMap.get('id'));
+      if(this.materialId) {
+          this.materialService.findMaterialById(this.materialId).subscribe((res: { [x: string]: any; }) => {
+            this.materialForm = this.fb.group({
+              a_name: [res["a_name"]],
+              fossiles: [res["fossiles"]],
+              prozessenergie: [res["prozessenergie"]],
+              productionCO2: [res["productionCO2"]],
+              bioco2prod: [res["bioco2prod"]],
+              bioFuelCO2: [res["bioFuelCO2"]],
+              dichte: [res["dichte"]],
+              co2Verbrennung: [res["co2Verbrennung"]],
+              bioCO2Verbrennung: [res["bioCO2Verbrennung"]],
+              heizenergie: [res["heizenergie"]],
+              co2Recycling: [res["co2Recycling"]],
+              energieRecycling: [res["energieRecycling"]]
+            })
+          });
+      }
+    }
 
   onSubmit(): void {
     var body = {
+      id: this.materialId,
       a_name: this.materialForm.controls['a_name'].value,
       fossiles: this.materialForm.controls['fossiles'].value,
       prozessenergie: this.materialForm.controls['prozessenergie'].value,

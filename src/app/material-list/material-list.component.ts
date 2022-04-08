@@ -48,7 +48,10 @@ export class MaterialListComponent implements AfterViewInit {
 
   }
   addMaterial(): void {
-    this.router.navigate(['/materialform']);
+    this.router.navigate(['/materialForm']);
   }
 
+  showMaterialDetail(id: number) {
+    this.router.navigate(['/materialForm/edit/' + id]);
+  }
 }

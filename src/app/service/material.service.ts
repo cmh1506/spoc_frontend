@@ -33,4 +33,9 @@ export class MaterialService {
     let url = `${environment.apiURL}material/delete/` + id;
     return this.http.delete(url, {headers});
   }
+
+  findMaterialById(materialId: number): {[key: string]: any}{
+    const headers = this.stateService.headers;
+    return this.http.get(`${environment.apiURL}material/findMaterialById/` + materialId, {headers});
+  }
 }

@@ -41,8 +41,8 @@ export class BenutzerComponent implements AfterViewInit, OnInit {
   }
 
 
-  addBenutzer() {
-    this.router.navigate(['/benutzerform']);
+  editBenutzer(id: number) {
+    this.router.navigate(['/benutzerForm/edit/' + id]);
   }
 
   deleteBenutzer(row: any) {

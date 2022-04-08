@@ -17,7 +17,6 @@ const routes: Routes = [
       {path: '', component: LoginComponent},
       {path: ':notfound', component: LoginComponent}
     ]},
-  /*{ path: 'login', component: LoginComponent },*/
   { path: 'users', component: BenutzerComponent },
   { path: 'verpackungen', component: VerpackungListComponent },
   { path: 'verpackungForm', children: [
@@ -25,10 +24,15 @@ const routes: Routes = [
       {path: 'edit/:id', component: VerpackungFormComponent}
     ]},
   { path: 'material', component: MaterialComponent },
-  { path: 'benutzerForm', component: BenutzerFormComponent },
+  { path: 'benutzerForm', children: [
+      {path: 'edit/:id', component: BenutzerFormComponent}
+    ]},
   { path: 'recyclingverfahrens', component: RecyclingverfahrenListComponent },
   { path: 'materials', component: MaterialListComponent },
-  { path: 'materialform', component: MaterialFormComponent },
+  { path: 'materialForm', children: [
+      { path:'', component:MaterialFormComponent },
+      { path: 'edit/:id', component: MaterialFormComponent }
+    ]},
   { path: 'registration', component: RegistrationComponent },
   { path: 'changePW', component: ChangePasswordComponent }
 ];

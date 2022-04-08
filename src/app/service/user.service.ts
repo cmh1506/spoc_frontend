@@ -36,4 +36,16 @@ export class UserService {
       let url = `${environment.apiURL}user/changePW`;
       return this.http.post(url, body, {headers});
     }
+
+  findUserById(benutzerId: number): {[key: string]: any} {
+    const headers = this.stateService.headers;
+    return this.http.get(`${environment.apiURL}user/findUserById/` + benutzerId, {headers});
+  }
+
+  updateUser(body: any) {
+    const headers = this.stateService.headers;
+    let url = `${environment.apiURL}user/updateUser`;
+    return this.http.put<User>(url, body, {headers});
+
+  }
 }

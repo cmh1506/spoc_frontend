@@ -37,6 +37,7 @@ import {VerpackungListComponent} from "./verpackung-list/verpackung-list.compone
 import {TransportmittelListComponent} from './transportmittel-list/transportmittel-list.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
         MatInputModule,
         MatSelectModule,
         MatRadioModule,
-        MatCardModule
+        MatCardModule,
+        MatCheckboxModule
     ],
   providers: [],
   bootstrap: [AppComponent]

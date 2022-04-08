@@ -13,17 +13,6 @@
             <mat-error *ngIf="benutzerForm.controls['username'].hasError('required')">
               First name is <strong>required</strong>
             </mat-error>
-
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="benutzerForm.controls['email'].hasError('required')">
-              Last name is <strong>required</strong>
-            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -40,6 +29,17 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="benutzerForm.controls['email'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
             <input matInput placeholder="Rolle" formControlName="role">
             <mat-error *ngIf="benutzerForm.controls['role'].hasError('required')">
               Last name is <strong>required</strong>
@@ -47,8 +47,30 @@
           </mat-form-field>
         </div>
       </div>
-
-
+      <div class="row">
+        <div class="col">
+          <mat-checkbox id="accountNonExpiredCB" color="primary"
+                        formControlName="accountNonExpired">Account Non Expired</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-checkbox id="accountNonLockedCB" color="primary"
+                        formControlName="accountNonLocked">Account Non Locked</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-checkbox id="credentialsNonExpiredCB" color="primary"
+                        formControlName="credentialsNonExpired">Credentials Non Expired</mat-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-checkbox id="enabledCB" color="primary"
+                        formControlName="enabled">Account Enabled</mat-checkbox>
+        </div>
+      </div>
 
     </mat-card-content>
     <mat-card-actions>
