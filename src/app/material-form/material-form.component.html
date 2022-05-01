@@ -74,19 +74,62 @@
             <input matInput placeholder="Heizenergie" formControlName="heizenergie">
           </mat-form-field>
         </div>
-      </div><div class="row">
-      <div class="col">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Co2Recycling" formControlName="co2Recycling">
-        </mat-form-field>
       </div>
-    </div><div class="row">
-      <div class="col">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="EnergieRecycling" formControlName="energieRecycling">
-        </mat-form-field>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Co2Recycling" formControlName="co2Recycling">
+          </mat-form-field>
+        </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="EnergieRecycling" formControlName="energieRecycling">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Recycling-Rate" formControlName="r_rate_herstellung">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Co2-Speicherung bei Deponierung" formControlName="co2_deponie">
+                </mat-form-field>
+              </div>
+            </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-checkbox id="recyclat_2te_mal" color="primary"
+                        formControlName="recyclat_2te_mal">2. mal recyclierbar
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-checkbox id="recyclierbar" color="primary"
+                        formControlName="recyclierbar">recyclierbar
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <!--<div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Co2-Speicherung bei Deponierung" formControlName="co2_deponie">
+          </mat-form-field>
+        </div>
+      </div>-->
+
+
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">Submit</button>

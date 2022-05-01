@@ -26,7 +26,7 @@
       <thead class="thead">
 
       <tr class="d-flex">
-        <th class="col-1">Umweltwirkung Gesamtverpackung:</th>
+        <th class="col-1">Umweltwirkung Gesamtverpackung</th>
         <th class="col-1">CO<sub>2</sub>-equiv. [g]</th>
         <th class="col-1">Energie [kJ]</th>
       </tr>
@@ -52,8 +52,13 @@
         <td class="col-1">{{cradleToGraveGutschriftEnergie.toFixed(2)}} </td>
       </tr>
       <tr class="d-flex">
-        <td class="col-1">Cradle to Grave mit indirektem CO<sub>2</sub>-für Biofuel:</td>
-        <td class="col-1">{{cradleToGraveCO2GutschriftBioFuel.toFixed(2)}} </td>
+        <td class="col-1">Cradle to Grave mit fossilem CO<sub>2</sub> und Bio-CO<sub>2</sub> und Gutschriften:</td>
+        <td class="col-1">{{cradleToGraveBioCo2Gutschrift.toFixed(2)}} </td>
+        <td class="col-1"></td>
+      </tr>
+      <tr class="d-flex">
+        <td class="col-1">Gesamtes indirektes CO<sub>2</sub> für Biofuel:</td>
+        <td class="col-1">{{gesamtIndirektCo2Biofuel.toFixed(2)}} </td>
         <td class="col-1"></td>
       </tr>
     </table>
@@ -72,7 +77,8 @@
         <td colspan="2">Aufwand Verarbeitung</td>
         <td colspan="2">Verbrennung mit Energienutzung</td>
         <td colspan="1">CO<sub>2</sub>-Gutschrift<br>aus Verbrennung</td>
-        <td colspan="1">Indirekt CO<sub>2</sub>-<br>für Biofuel</td>
+        <td colspan="1">Indirektes CO<sub>2</sub>-<br>für Biofuel</td>
+        <td colspan="1">Gesamt Bio-CO<sub>2</sub></td>
         <td colspan="2">Transport Einzelmaterialien</td>
         <td colspan="1"></td>
       </tr>
@@ -95,6 +101,7 @@
         <th scope="col">Energie [kJ]</th>
         <th scope="col">CO<sub>2</sub>-eq. [g]</th>
         <th scope="col">CO<sub>2</sub>-eq. [g]</th>
+        <th scope="col">Bio CO<sub>2</sub>-eq. [g]</th>
         <th scope="col">CO<sub>2</sub>-eq. [g]</th>
         <th scope="col">Energie [kJ]</th>
 
@@ -117,16 +124,17 @@
         <td>{{ materialverwendung.transportmittel }}</td>
 
 
-        <td class="berechnet">{{ materialverwendung.materialCO2Eq }}</td>
-        <td class="berechnet">{{ materialverwendung.materialEnergie }}</td>
-        <td class="berechnet">{{ materialverwendung.co2AufwandVerarbeitung }}</td>
-        <td class="berechnet">{{ materialverwendung.energieAufwandVerarbeitung }}</td>
-        <td class="berechnet">{{ materialverwendung.verbrennungCo2Eq }}</td>
-        <td class="berechnet">{{ materialverwendung.verbrennungENutzEnergie }}</td>
-        <td class="berechnet">{{ materialverwendung.gutschriftVerbrennungCo2Eq }}</td>
-        <td class="berechnet">{{ materialverwendung.indirectco2Biofuel }}</td>
-        <td class="berechnet">{{ materialverwendung.transportCo2Eq }}</td>
-        <td class="berechnet">{{ materialverwendung.transportEnergie }}</td>
+        <td class="berechnet">{{ materialverwendung.materialCO2Eq.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.materialEnergie.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.co2AufwandVerarbeitung.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.energieAufwandVerarbeitung.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.verbrennungCo2Eq.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.verbrennungENutzEnergie.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.gutschriftVerbrennungCo2Eq.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.indirectco2Biofuel.toFixed(2) }}</td>
+        <td class="berechnet">{{ (materialverwendung.herstellungBioCo2Eq + materialverwendung.verbrennungBioCo2Eq).toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.transportCo2Eq.toFixed(2) }}</td>
+        <td class="berechnet">{{ materialverwendung.transportEnergie.toFixed(2) }}</td>
 
         <td>
           <button type="button" class="btn btn-danger" (click)="deleteMaterialverwendung(materialverwendung.id)">

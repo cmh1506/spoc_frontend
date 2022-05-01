@@ -22,7 +22,11 @@ export class MaterialFormComponent implements OnInit {
     bioCO2Verbrennung: [null, Validators.required],
     heizenergie: [null, Validators.required],
     co2Recycling: [null, Validators.required],
-    energieRecycling: [null, Validators.required]
+    energieRecycling: [null, Validators.required],
+    r_rate_herstellung: [null, Validators.required],
+    co2_deponie: [null, Validators.required],
+    recyclat_2te_mal: [null, Validators.required],
+    recyclierbar: [null, Validators.required]
   });
 
   hasUnitNumber = false;
@@ -52,7 +56,11 @@ export class MaterialFormComponent implements OnInit {
               bioCO2Verbrennung: [res["bioCO2Verbrennung"]],
               heizenergie: [res["heizenergie"]],
               co2Recycling: [res["co2Recycling"]],
-              energieRecycling: [res["energieRecycling"]]
+              energieRecycling: [res["energieRecycling"]],
+              r_rate_herstellung: [res["r_rate_herstellung"]],
+              co2_deponie: [res["co2_deponie"]],
+              recyclat_2te_mal: [res["recyclat_2te_mal"]],
+              recyclierbar: [res["recyclierbar"]]
             })
           });
       }
@@ -73,6 +81,10 @@ export class MaterialFormComponent implements OnInit {
       heizenergie: this.materialForm.controls['heizenergie'].value,
       co2Recycling: this.materialForm.controls['co2Recycling'].value,
       energieRecycling: this.materialForm.controls['energieRecycling'].value,
+      r_rate_herstellung: this.materialForm.controls['r_rate_herstellung'].value,
+      co2_deponie: this.materialForm.controls['co2_deponie'].value,
+      recyclat_2te_mal: this.materialForm.controls['recyclat_2te_mal'].value,
+      recyclierbar: this.materialForm.controls['recyclierbar'].value
     }
 
 

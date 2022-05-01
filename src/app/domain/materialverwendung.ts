@@ -30,4 +30,7 @@ export class Materialverwendung{
   transportEnergie!: number;
   indirectco2Biofuel!: number;
   co2AufwandVerarbeitung!: number;
+  verbrennungBioCo2Eq!: number;
+  herstellungBioCo2Eq!: number;
+
 }

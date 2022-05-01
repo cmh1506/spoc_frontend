@@ -70,6 +70,8 @@ export class VerpackungFormComponent implements OnInit {
   cradleToGraveEnergie: number =0;
   cradleToGraveGutschriftEnergie: number =0;
   cradleToGraveGutschriftBioFuelEnergie: number =0;
+  cradleToGraveBioCo2Gutschrift: number= 0;
+  gesamtIndirektCo2Biofuel: number = 0;
 
 
   ngOnInit(): void {
@@ -109,16 +111,25 @@ export class VerpackungFormComponent implements OnInit {
         let cradleToGraveEnergie: number =0;
         let cradleToGraveGutschriftEnergie: number =0;
         let cradleToGraveGutschriftBioFuelEnergie: number =0;
+        let cradleToGraveBioCo2Gutschrift: number = 0;
+        let gesamtIndirektCo2Biofuel: number = 0;
         this.materialverwendungs.forEach(m => {
           materialCO2Aufwand = materialCO2Aufwand +  m.materialCO2Eq;
           cradleToGate = cradleToGate + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung;
           cradleToGrave = cradleToGrave + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq;
-          cradleToGraveCO2Gutschrift = cradleToGraveCO2Gutschrift + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq - m.gutschriftVerbrennungCo2Eq;
+          //Alu produziert beim Verbrennen kein co2
+          if(m.verbrennungBioCo2Eq > 0.0 && m.verbrennungCo2Eq == 0.0){
+            cradleToGraveCO2Gutschrift = cradleToGraveCO2Gutschrift + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq;
+          } else {
+            cradleToGraveCO2Gutschrift = cradleToGraveCO2Gutschrift + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq - m.gutschriftVerbrennungCo2Eq + m.verbrennungBioCo2Eq;
+          }
           cradleToGraveCO2GutschriftBioFuel = cradleToGraveCO2GutschriftBioFuel + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq - m.gutschriftVerbrennungCo2Eq + m.indirectco2Biofuel;
           materialAufwandEnergie = materialAufwandEnergie + m.materialEnergie;
           cradleToGateEnergie = cradleToGateEnergie + m.materialEnergie + m.transportEnergie + m.energieAufwandVerarbeitung;
           cradleToGraveEnergie = cradleToGraveEnergie + m.materialEnergie + m.transportEnergie + m.energieAufwandVerarbeitung;
           cradleToGraveGutschriftEnergie = cradleToGraveGutschriftEnergie + m.materialEnergie + m.transportEnergie + m.energieAufwandVerarbeitung - m.verbrennungENutzEnergie;
+          cradleToGraveBioCo2Gutschrift = cradleToGraveBioCo2Gutschrift + + m.materialCO2Eq + m.transportCo2Eq + m.co2AufwandVerarbeitung + m.verbrennungCo2Eq - m.gutschriftVerbrennungCo2Eq + m.verbrennungBioCo2Eq + m.herstellungBioCo2Eq;
+          gesamtIndirektCo2Biofuel = gesamtIndirektCo2Biofuel + m.indirectco2Biofuel;
           //cradleToGraveGutschriftBioFuelEnergie = cradleToGraveGutschriftBioFuelEnergie + m.materialEnergie + m.transportEnergie + m.energieAufwandVerarbeitung + m.verbrennungENutzEnergie - m.verbrennungENutzEnergie;
         });
         this.materialCO2Aufwand = materialCO2Aufwand;
@@ -131,9 +142,16 @@ export class VerpackungFormComponent implements OnInit {
         this.cradleToGraveEnergie = cradleToGraveEnergie;
         this.cradleToGraveGutschriftEnergie = cradleToGraveGutschriftEnergie;
         this.cradleToGraveGutschriftBioFuelEnergie = cradleToGraveGutschriftBioFuelEnergie;
+        this.cradleToGraveBioCo2Gutschrift = cradleToGraveBioCo2Gutschrift;
+        this.gesamtIndirektCo2Biofuel = gesamtIndirektCo2Biofuel;
       })
     }
   }
+
+
+
+
+
 
   @ViewChild('callMatVerwDialog') callMatVerwDialog!: TemplateRef<any>;
 
@@ -171,12 +189,19 @@ export class VerpackungFormComponent implements OnInit {
       this.materialCO2Aufwand = this.materialCO2Aufwand + res.materialCO2Eq;
       this.cradleToGate = this.cradleToGate + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung;
       this.cradleToGrave = this.cradleToGrave + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq;
-      this.cradleToGraveCO2Gutschrift = this.cradleToGraveCO2Gutschrift + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq - res.gutschriftVerbrennungCo2Eq;
+
+      if(res.verbrennungBioCo2Eq > 0.0 && res.verbrennungCo2Eq == 0.0){
+        this.cradleToGraveCO2Gutschrift = this.cradleToGraveCO2Gutschrift + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq;
+      } else {
+        this.cradleToGraveCO2Gutschrift = this.cradleToGraveCO2Gutschrift + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq - res.gutschriftVerbrennungCo2Eq + res.verbrennungBioCo2Eq;
+      }
       this.cradleToGraveCO2GutschriftBioFuel = this.cradleToGraveCO2GutschriftBioFuel + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq - res.gutschriftVerbrennungCo2Eq + res.indirectco2Biofuel;
       this.materialAufwandEnergie = this.materialAufwandEnergie + res.materialEnergie;
       this.cradleToGateEnergie = this.cradleToGateEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung;
       this.cradleToGraveEnergie = this.cradleToGraveEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung
       this.cradleToGraveGutschriftEnergie = this.cradleToGraveGutschriftEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung - res.verbrennungENutzEnergie;
+      this.cradleToGraveBioCo2Gutschrift = this.cradleToGraveBioCo2Gutschrift + + res.materialCO2Eq + res.transportCo2Eq + res.co2AufwandVerarbeitung + res.verbrennungCo2Eq - res.gutschriftVerbrennungCo2Eq + res.verbrennungBioCo2Eq + res.herstellungBioCo2Eq;
+      this.gesamtIndirektCo2Biofuel = this.gesamtIndirektCo2Biofuel + res.indirectco2Biofuel;
       //this.cradleToGraveGutschriftBioFuelEnergie = this.cradleToGraveGutschriftBioFuelEnergie + res.materialEnergie + res.transportEnergie + res.energieAufwandVerarbeitung - res.verbrennungENutzEnergie;
     });
     this.dialog.closeAll();

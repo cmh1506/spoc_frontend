@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  //apiURL: 'http://spoc-env.eba-pwgkksgs.eu-central-1.elasticbeanstalk.com/'
+  //apiURL: 'http://code4u.eu-central-1.elasticbeanstalk.com/'
   //apiURL: ''
   apiURL: 'http://localhost:8080/'
   //apiURL: ''
